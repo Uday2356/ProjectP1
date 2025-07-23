@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Predictor App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Main container for the app -->
+  <div class="card">
+
+    <!-- Search box -->
+    <div class="search">
+      <input type="text" placeholder="Enter city name" spellcheck="false">
+      <button><img src="images/search.png" alt="Search Icon"></button>
+    </div>
+
+    <!-- Weather icon and temperature info -->
+    <div class="weather">
+      <img src="images/rain.png" class="weather-icon" alt="Weather Icon">
+      <h1 class="temp">--°C</h1>
+      <h2 class="city">City Name</h2>
+
+      <!-- Additional weather details -->
+      <div class="details">
+        <!-- Humidity section -->
+        <div class="col">
+          <img src="images/humidity.png" alt="Humidity Icon">
+          <div>
+            <p class="humidity">--%</p>
+            <p>Humidity</p>
+          </div>
+        </div>
+
+        <!-- Wind speed section -->
+        <div class="col">
+          <img src="images/wind.png" alt="Wind Icon">
+          <div>
+            <p class="wind">-- km/h</p>
+            <p>Wind</p>
+          </div>
+        </div>
+      </div> <!-- End of details -->
+    </div> <!-- End of weather -->
+
+  </div> <!-- End of card -->
+
+<script>
+  const apiKey = "cfc46557893544e9fd196fc93369c903"; // Replace with your own API key
+  const weathericon = document.querySelector(".weather-icon");
+
+  async function checkWeather(city) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      // Check if the city is found and API returns valid weather data
+      if (data.cod !== 200) {
+        throw new Error(data.message || "Weather data not found");
+      }
+
+      // Update weather values
+      document.querySelector(".temp").textContent = `${data.main.temp}°C`;
+      document.querySelector(".humidity").textContent = `${data.main.humidity}%`;
+      document.querySelector(".wind").textContent = `${data.wind.speed} km/h`;
+      document.querySelector(".city").textContent = data.name;
+
+      // Update weather icon based on main condition
+      const condition = data.weather[0].main;
+      switch (condition) {
+        case "Clouds":
+          weathericon.src = "images/clouds.png";
+          break;
+        case "Clear":
+          weathericon.src = "images/clear.png";
+          break;
+        case "Rain":
+          weathericon.src = "images/rain.png";
+          break;
+        case "Drizzle":
+          weathericon.src = "images/drizzle.png";
+          break;
+        case "Mist":
+          weathericon.src = "images/mist.png";
+          break;
+        default:
+          weathericon.src = "images/default.png"; // fallback image
+          break;
+      }
+
+    } catch (error) {
+      console.error("Error fetching weather:", error);
+      alert("City not found or API error.");
+    }
+  }
+
+  // Trigger search on button click
+  document.querySelector(".search button").addEventListener("click", () => {
+    const city = document.querySelector(".search input").value.trim();
+    if (city) {
+      checkWeather(city);
+    }
+  });
+
+  // Load default city
+  checkWeather("Bangalore");
+</script>
+
+</body>
+</html>
