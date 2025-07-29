@@ -19,7 +19,7 @@
 
     <!-- Weather icon and temperature info -->
     <div class="weather">
-      <img src="images/rain.png" class="weather-icon" alt="Weather Icon">
+      <img src="./images/rain.png" class="weather-icon" alt="Weather Icon">
       <h1 class="temp">--°C</h1>
       <h2 class="city">City Name</h2>
 
@@ -27,7 +27,7 @@
       <div class="details">
         <!-- Humidity section -->
         <div class="col">
-          <img src="images/humidity.png" alt="Humidity Icon">
+          <img src="./images/humidity.png" alt="Humidity Icon">
           <div>
             <p class="humidity">--%</p>
             <p>Humidity</p>
@@ -36,7 +36,7 @@
 
         <!-- Wind speed section -->
         <div class="col">
-          <img src="images/wind.png" alt="Wind Icon">
+          <img src="./images/wind.png" alt="Wind Icon">
           <div>
             <p class="wind">-- km/h</p>
             <p>Wind</p>
@@ -73,22 +73,22 @@
       const condition = data.weather[0].main;
       switch (condition) {
         case "Clouds":
-          weathericon.src = "images/clouds.png";
+          weathericon.src = "./images/clouds.png";
           break;
         case "Clear":
-          weathericon.src = "images/clear.png";
+          weathericon.src = "./images/clear.png";
           break;
         case "Rain":
-          weathericon.src = "images/rain.png";
+          weathericon.src = "./images/rain.png";
           break;
         case "Drizzle":
-          weathericon.src = "images/drizzle.png";
+          weathericon.src = "./images/drizzle.png";
           break;
         case "Mist":
-          weathericon.src = "images/mist.png";
+          weathericon.src = "./images/mist.png";
           break;
         default:
-          weathericon.src = "images/default.png"; // fallback image
+          weathericon.src = "./images/default.png"; // fallback image
           break;
       }
 
